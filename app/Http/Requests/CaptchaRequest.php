@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ReplyRequest extends FormRequest
+class CaptchaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class ReplyRequest extends FormRequest
     public function rules()
     {
         return [
-            'content' => 'required|min:2',
+            'email' => 'required|email|exists:users,email',
         ];
     }
 }

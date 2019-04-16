@@ -1,8 +1,11 @@
 <?php
 namespace App\Services;
 
+use App\Models\User;
+
 class UserService
 {
+    //注册
     public function add()
     {
         $postData = request()->post();

@@ -13,7 +13,7 @@ class GuideRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,19 @@ class GuideRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        switch($this->method()) {
+            case 'POST':
+                return [
+                    'title' => 'required|string',
+                    'body' => 'required|string',
+                ];
+                break;
+            case 'PATCH':
+                return [
+                    'title' => 'string',
+                    'body' => 'string',
+                ];
+                break;
+        }
     }
 }

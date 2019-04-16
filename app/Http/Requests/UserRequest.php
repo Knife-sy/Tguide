@@ -13,7 +13,7 @@ class UserRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,21 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        switch($this->method()) {
+            case 'POST':
+                return [
+                        'name' => 'required|string',
+                        'email'=> 'required|email|unique:users',
+                        'password'=> 'required|string|confirmed'
+                ];
+                break;
+            case 'PATCH':
+                $userId = \Auth::guard('api')->id();
+                return [
+                    'name' => 'required|string',
+                    'avatar_image_id' => 'exists:images,id,type,avatar,user_id,'.$userId,
+                ];
+                break;
+        }
     }
 }
